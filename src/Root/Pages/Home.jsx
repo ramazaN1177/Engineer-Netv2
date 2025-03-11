@@ -27,7 +27,7 @@ const Home = () => {
                 <img
                   src="/Assets/icons/filter.svg"
                   alt="filter"
-                  height={24}
+                  height={25}
                   width={24} />
               </div>
               {isDropdownOpen && (
