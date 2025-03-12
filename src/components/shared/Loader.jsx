@@ -5,7 +5,7 @@ const Loader = () => {
     <div className='flex-center w-full'>
         <img    src='/Assets/icons/loader.svg'
                 alt='loader'
-                width={25}
+                width={24}
                 height={24}
         />
     </div>
