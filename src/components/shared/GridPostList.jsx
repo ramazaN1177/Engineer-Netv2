@@ -7,6 +7,9 @@ const GridPostList = ({ posts, showUser = true, showStats = true }) => {
 
     const { user } = useUserContext();
 
+    // Sort posts by createdAt in descending order
+    //const sortedPosts = [...posts].sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
+
     return (
         <ul className='grid-container'>
             {posts.map((post) => (

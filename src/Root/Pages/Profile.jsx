@@ -7,14 +7,11 @@ import {
   useLocation,
 } from "react-router-dom";
 
-
-import  LikedPosts  from '../Pages/LikedPosts'
+import LikedPosts from '../Pages/LikedPosts'
 import { useUserContext } from "../../context/AuthContext";
 import { useGetUserById } from "../../react-query/queriesAndMutations";
-import  GridPostList from '../../components/shared/GridPostList'
+import GridPostList from '../../components/shared/GridPostList'
 import Loader from '../../components/shared/Loader'
-
-
 
 const StatBlock = ({ value, label }) => (
   <div className="flex-center gap-2">
@@ -36,6 +33,9 @@ const Profile = () => {
         <Loader />
       </div>
     );
+
+  // Sort posts by createdAt in descending order
+  const sortedPosts = [...currentUser.posts].sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
 
   return (
     <div className="profile-container">
@@ -130,7 +130,7 @@ const Profile = () => {
       <Routes>
         <Route
           index
-          element={<GridPostList posts={currentUser.posts} showUser={false} />}
+          element={<GridPostList posts={sortedPosts} showUser={false} />}
         />
         {currentUser.$id === user.id && (
           <Route path="/liked-posts" element={<LikedPosts />} />
@@ -140,6 +140,5 @@ const Profile = () => {
     </div>
   );
 };
-
 
 export default Profile;
