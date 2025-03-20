@@ -1,6 +1,9 @@
 import { React, useState, useEffect } from 'react'
 import { useDeleteSevedPost, useLikePost, useSavePost,useGetCurrentUser } from '../../react-query/queriesAndMutations'
 import { checkIsLiked } from '../../appwrite/utils';
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
+import { BsBookmark,BsBookmarkFill  } from "react-icons/bs";
 
 const PostStats = ({ post, userId }) => {
     const { data: currentUser } = useGetCurrentUser();
@@ -55,24 +58,15 @@ const PostStats = ({ post, userId }) => {
 
     return (
         <div className='flex justify-between items-center z-20'>
-            <div className='flex gap-2 mr-5'>
-                <img
-                    src={`${checkIsLiked(likes, userId) ? "/Assets/icons/liked.svg" : "/Assets/icons/like.svg"}`}
-                    alt="like"
-                    width={20}
-                    height={20}
-                    onClick={handleLikePost}
-                    className='cursor-pointer' />
-                <p className='small-medium lg:base-medium'>{likes.length}</p>
+            <div className='flex gap-2 mr-5' >
+               <div onClick={handleLikePost}>{checkIsLiked(likes, userId) ? <FaHeart  className='text-xl text-yellow-400' /> : <FaRegHeart  className='text-xl text-yellow-400 ' />}</div>
+
+                <p className='small-medium lg:base-medium mt-0.4'>{likes.length}</p>
             </div>
             <div className='flex gap-2'>
-                <img
-                    src={isSaved ? "/Assets/icons/saved.svg" : "/Assets/icons/save.svg"}
-                    alt="save"
-                    width={20}
-                    height={20}
-                    onClick={handleSavePost}
-                    className='cursor-pointer' />
+              
+            <div onClick={handleSavePost}>{isSaved ? <BsBookmarkFill className='text-xl text-yellow-400' /> : <BsBookmark className='text-xl text-yellow-400'  />}</div>
+
             </div>
 
         </div>

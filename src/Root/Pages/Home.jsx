@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Loader from '../../components/shared/Loader';
 import { useGetRecentPosts } from '../../react-query/queriesAndMutations';
 import PostCard from '../../components/shared/PostCard';
+import { IoFilterOutline } from "react-icons/io5";
 
 const Home = () => {
   const { data: posts, isPending: isPostLoading, isError: isErrorPosts } = useGetRecentPosts();
@@ -20,15 +21,11 @@ const Home = () => {
         <div className='home-posts'>
 
           <div className='flex-between w-full max-w-5xl mb-7'>
-            <h3 className='body-bold md:h3-bold'>Home Feed</h3>
+            <h1 className='body-bold md:h1-bold '>Home Feed</h1>
             <div className='relative'>
               <div className='flex-center gap-3 bg-postDetailBacground rounded-xl px-4 py-2 cursor-pointer' onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                 <p className='small-medium md:base-medium text-light-2'>{selectedFilter}</p>
-                <img
-                  src="/Assets/icons/filter.svg"
-                  alt="filter"
-                  height={24}
-                  width={24} />
+                <IoFilterOutline className='text-2xl'/>
               </div>
               {isDropdownOpen && (
                 <div className='flex-col top-full mt-2 bg-customGreen-2 shadow-lg rounded-xl z-10 max-h-48 overflow-y-auto'>
@@ -89,11 +86,12 @@ const Home = () => {
                 </div>
               )}
             </div>
+
           </div>
           {isPostLoading && !posts ? (
             <Loader></Loader>
           ) : (
-            <ul className='flex flex-col flex-1 gap-9 w-full'>
+            <ul className='flex flex-col flex-center gap-9 w-full'>
               {
                 filteredPosts?.map((post) => (
                   <PostCard post={post} key={post.caption} />

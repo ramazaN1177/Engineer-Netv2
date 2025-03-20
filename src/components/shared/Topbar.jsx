@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { useLogOut } from '../../react-query/queriesAndMutations'
 import { useUserContext } from '../../context/AuthContext';
+import { CiLogout } from "react-icons/ci";
 
 const Topbar = () => {
 
@@ -32,7 +33,7 @@ const Topbar = () => {
 
             <div className='flex gap-4'>
                 <button variant = 'ghost' className='shad-button_ghost' onClick={()=>logOut()}>
-                    <img src="/Assets/icons/logout.svg" alt="logout" />
+                    <CiLogout className='text-2xl text-yellow-400' />
                 </button>
                 <Link to = {`/profile/${user.id}`} className='flex justify-center gap-3' >
                     <img src={user.imageUrl || "/Assets/icons/profile-placeholder.svg"} alt="profile" className='h-10 w-10 rounded-full' />

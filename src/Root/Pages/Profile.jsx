@@ -12,6 +12,10 @@ import { useUserContext } from "../../context/AuthContext";
 import { useGetUserById } from "../../react-query/queriesAndMutations";
 import GridPostList from '../../components/shared/GridPostList'
 import Loader from '../../components/shared/Loader'
+import { IoImageOutline } from "react-icons/io5";
+import { FaRegHeart } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
+
 
 const StatBlock = ({ value, label }) => (
   <div className="flex-center gap-2">
@@ -76,12 +80,7 @@ const Profile = () => {
                 className={`h-12 bg-postBackground px-5 text-light-1 flex-center gap-2 rounded-lg ${
                   user.id !== currentUser.$id && "hidden"
                 }`}>
-                <img
-                  src={"/Assets/icons/edit.svg"}
-                  alt="edit"
-                  width={20}
-                  height={20}
-                />
+                <FiEdit className="text-yellow-400 text-xl" />
                 <p className="flex whitespace-nowrap small-medium">
                   Edit Profile
                 </p>
@@ -103,12 +102,8 @@ const Profile = () => {
             className={`profile-tab rounded-l-lg ${
               pathname === `/profile/${id}` && "!bg-postBackground"
             }`}>
-            <img
-              src={"/Assets/icons/posts.svg"}
-              alt="posts"
-              width={20}
-              height={20}
-            />
+           <IoImageOutline className="text-yellow-400 text-2xl" />
+
             Posts
           </Link>
           <Link
@@ -116,12 +111,7 @@ const Profile = () => {
             className={`profile-tab rounded-r-lg ${
               pathname === `/profile/${id}/liked-posts` && "!bg-postBackground"
             }`}>
-            <img
-              src={"/Assets/icons/like.svg"}
-              alt="like"
-              width={20}
-              height={20}
-            />
+            <FaRegHeart className="text-yellow-400 text-2xl" />
             Liked Posts
           </Link>
         </div>

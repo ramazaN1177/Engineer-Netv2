@@ -1,55 +1,57 @@
+import { RiHome6Line, RiImageLine, RiUser3Line, RiBookmarkLine, RiAddBoxLine } from "react-icons/ri";
+
 export const sidebarLinks = [
-    {
-      imgURL: "/Assets/icons/home.svg",
-      route: "/",
-      label: "Home",
-    },
-    {
-      imgURL: "/Assets/icons/wallpaper.svg",
-      route: "/explore",
-      label: "Explore",
-    },
-    {
-      imgURL: "/Assets/icons/people.svg",
-      route: "/all-users",
-      label: "People",
-    },
-    {
-      imgURL: "/Assets/icons/bookmark.svg",
-      route: "/saved",
-      label: "Saved",
-    },
-    {
-      imgURL: "/Assets/icons/gallery-add.svg",
-      route: "/create-post",
-      label: "Create Post",
-    },
-  ];
-  
-  export const bottombarLinks = [
-    {
-      imgURL: "/Assets/icons/home.svg",
-      route: "/",
-      label: "Home",
-    },
-    {
-      imgURL: "/Assets/icons/wallpaper.svg",
-      route: "/explore",
-      label: "Explore",
-    },
-    {
-      imgURL: "/Assets/icons/bookmark.svg",
-      route: "/saved",
-      label: "Saved",
-    },
-    {
-      imgURL: "/Assets/icons/people.svg",
-      route: "/all-users",
-      label: "People",
-    },
-    {
-      imgURL: "/Assets/icons/gallery-add.svg",
-      route: "/create-post",
-      label: "Create",
-    },
-  ];
+  {
+    imgURL: RiHome6Line, // Home icon
+    route: "/",
+    label: "Home",
+  },
+  {
+    imgURL: RiImageLine, // Explore icon
+    route: "/explore",
+    label: "Explore",
+  },
+  {
+    imgURL: RiUser3Line, // People icon
+    route: "/all-users",
+    label: "People",
+  },
+  {
+    imgURL: RiBookmarkLine, // Saved icon
+    route: "/saved",
+    label: "Saved",
+  },
+  {
+    imgURL: RiAddBoxLine, // Create Post icon
+    route: "/create-post",
+    label: "Create Post",
+  },
+];
+
+export const bottombarLinks = [
+  {
+    imgURL: RiHome6Line, // Home icon
+    route: "/",
+    label: "Home",
+  },
+  {
+    imgURL: RiImageLine, // Explore icon
+    route: "/explore",
+    label: "Explore",
+  },
+  {
+    imgURL: RiBookmarkLine, // Saved icon
+    route: "/saved",
+    label: "Saved",
+  },
+  {
+    imgURL: RiUser3Line, // People icon
+    route: "/all-users",
+    label: "People",
+  },
+  {
+    imgURL: RiAddBoxLine, // Create Post icon
+    route: "/create-post",
+    label: "Create",
+  },
+];

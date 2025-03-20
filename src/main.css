@@ -140,7 +140,7 @@
   }
 
   .home-posts {
-    @apply max-w-screen-sm flex flex-col items-center w-full gap-6 md:gap-9;
+    @apply max-w-screen-lg flex flex-col items-center w-full gap-6 md:gap-9;
   }
 
   .home-creators {
@@ -208,6 +208,7 @@
   .grid-container {
     @apply w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-7 max-w-5xl;
   }
+
 
   .grid-post_link {
     @apply flex rounded-[24px] border border-customGreen-3 overflow-hidden cursor-pointer w-full h-full;

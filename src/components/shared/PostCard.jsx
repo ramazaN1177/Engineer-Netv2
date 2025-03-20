@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import {timeAgo} from '../../appwrite/utils'
 import { useUserContext } from '../../context/AuthContext'
 import PostStats from './PostStats'
+import { FiEdit } from "react-icons/fi";
+
 
 const PostCard = ({post}) => {
 
@@ -37,13 +39,9 @@ const PostCard = ({post}) => {
                 </div>
             </div>
             <Link to={`/update-post/${post.$id}`}
-                className={`${user.id !== post.creator.$id && "hidden"}`}
+                className={`${user.id !== post.creator.$id && "hidden"} group`}
             >
-                <img 
-                    src="/Assets/icons/edit.svg" 
-                    alt="edit"
-                    width={20}
-                     height={20}/>
+                <FiEdit className='text-xl text-yellow-400 group-hover:text-white' />
             </Link>
         </div>
         <Link to = {`/posts/${post.$id}`}>

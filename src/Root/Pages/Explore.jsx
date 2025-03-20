@@ -5,6 +5,9 @@ import { useGetPosts, useSearchPosts } from '../../react-query/queriesAndMutatio
 import useDebounce from '../../hooks/useDebounce';
 import Loader from '../../components/shared/Loader';
 import { useInView } from "react-intersection-observer";
+import { IoFilterOutline } from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
+
 
 const Explore = () => {
   const { ref, inView } = useInView();
@@ -44,11 +47,7 @@ const Explore = () => {
       <div className='explore-inner_container'>
         <h2 className='h3-bold md:h2-bold w-full'>Search Posts</h2>
         <div className='flex gap-1 px-4 w-full rounded-lg bg-postBackground focus-within:outline focus-within:outline-2 focus-within:outline-customGreen-3'>
-          <img
-            src="/Assets/icons/search.svg"
-            alt="search"
-            width={24}
-            height={24} />
+          <IoSearch className='text-2xl text-gray-400 mt-3' />
           <input
             type='text'
             placeholder='Search'
@@ -63,11 +62,7 @@ const Explore = () => {
         <div className='relative'>
           <div className='flex-center gap-3 bg-postDetailBacground rounded-xl px-4 py-2 cursor-pointer' onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
             <p className='small-medium md:base-medium text-light-2'>{selectedFilter}</p>
-            <img
-              src="/Assets/icons/filter.svg"
-              alt="filter"
-              height={24}
-              width={24} />
+            <IoFilterOutline className='text-2xl' />
           </div>
           {isDropdownOpen && (
             <div className='flex-col top-full mt-2 bg-customGreen-2 shadow-lg rounded-xl z-10 max-h-48 overflow-y-auto'>
