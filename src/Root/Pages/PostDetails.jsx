@@ -8,6 +8,9 @@ import { useUserContext } from '../../context/AuthContext'
 import PostStats from '../../components/shared/PostStats'
 import { useDeletePost } from '../../react-query/queriesAndMutations'
 import { useNavigate } from 'react-router-dom'
+import { FiEdit } from "react-icons/fi";
+import { MdDeleteOutline } from "react-icons/md";
+
 
 const PostDetails = () => {
 
@@ -60,23 +63,15 @@ const PostDetails = () => {
                 </div>
                 </Link>
                 <div className='flex-center gap-4'>
-                    <Link to = {`/update-post/${post?.$id}`} className={`${user.id !== post?.creator.$id && 'hidden'}`}>
-                      <img 
-                        src="/Assets/icons/edit.svg" 
-                        alt="edit"
-                        width={24}
-                        height={24} />
+                    <Link to = {`/update-post/${post?.$id}`} className={`group ${user.id !== post?.creator.$id && 'hidden'}`}>
+                        <FiEdit className='text-xl text-yellow-400 group-hover:text-white' />
                     </Link>
                     <button 
                       onClick={handleDeletePost}
                       variant = "ghost"
-                      className={`ghost_details-delete-btn ${user.id !== post?.creator.$id && "hidden"}`}
+                      className={`ghost_details-delete-btn group ${user.id !== post?.creator.$id && "hidden"}`}
                       >
-                        <img 
-                          src="/Assets/icons/delete.svg" 
-                          alt="delete"
-                          width={24}
-                          height={24} />
+                      <MdDeleteOutline className='text-2xl text-blue-800 group-hover:text-white' />
                       
                     </button>
                 </div>
@@ -106,4 +101,4 @@ const PostDetails = () => {
   )
 }
 
-export default PostDetails
+export default PostDetails;
