@@ -1,15 +1,24 @@
-import React from 'react'
+import {React} from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import Loader from '../../components/shared/Loader';
 import { useUserContext } from '../../context/AuthContext';
-
+import { useUpdateProfile, useGetUserById } from '../../react-query/queriesAndMutations';
+import { toast } from 'react-toastify';
+import ProfileUploader from '../../components/shared/ProfileUploader';
 const UpdateProfile = () => {
 
   const { user, setUser } = useUserContext();
   const { id } = useParams();
-
+  const { data: currentUser } = useGetUserById(id || "");
+  const { mutateAsync: updateProfile, isPending: isLoadingUpdate } = useUpdateProfile();
   const navigate = useNavigate();
+  if (!currentUser)
+    return (
+      <div className="flex-center w-full h-full">
+        <Loader />
+      </div>
+    );
   return (
     <div className="flex flex-1">
       <div className='common-container'>
@@ -31,37 +40,64 @@ const UpdateProfile = () => {
             email: user.email,
             bio: user.bio || "",
           }}
-
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              const updatedProfile = await updateProfile({
+                userId: currentUser.$id,
+                name: values.name,
+                bio: values.bio,
+                file: values.file,
+                imageUrl: currentUser.imageUrl,
+                imageId: currentUser.imageId,
+              });
+              if (!updatedProfile) {
+                toast.error("Please try again");
+              } else {
+                setUser({
+                  ...user,
+                  name: updatedProfile?.name,
+                  bio: updatedProfile?.bio,
+                  imageUrl: updatedProfile?.imageUrl,
+                });
+                navigate(-1);
+              }
+            } catch (error) {
+              console.error(error);
+            } finally {
               setSubmitting(false);
-            }, 400);
+            }
           }}
         >
-          {({ isSubmitting }) => (
-            <Form className='flex flex-col gap-7 w-full mt-4 max-w-5xl'>
+          {({ isSubmitting, setFieldValue }) => (
+            <Form className="flex flex-col gap-7 w-full mt-4 max-w-5xl">
+              <label className="shad-form_label">Profile Photo</label>
+              <ProfileUploader
+                onFileChange={(file) => setFieldValue("file", [file])} // setFieldValue ile file alanını güncelle
+                mediaUrl={currentUser.imageUrl}
+              />
 
-              <label className='shad-form_label'>Name</label>
+              <label className="shad-form_label">Name</label>
               <Field className="shad-input p-2" type="text" name="name" />
-              <label className='shad-form_label'>Username</label>
+              <label className="shad-form_label">Username</label>
               <Field className="shad-input p-2" type="text" name="username" disabled />
-              <label className='shad-form_label'>E-Mail</label>
+              <label className="shad-form_label">E-Mail</label>
               <Field className="shad-input p-2" type="email" name="email" disabled />
-              <label className='shad-form_label'>Bio</label>
-              <Field as="textarea" name="caption" className="shad-textarea custom-scrollbar p-2" />              <div className="flex gap-4 items-center justify-end">
+              <label className="shad-form_label">Bio</label>
+              <Field as="textarea" name="bio" className="shad-textarea custom-scrollbar p-2" />
+              <div className="flex gap-4 items-center justify-end">
                 <button
                   type="button"
-                  className="shad-button_dark_4"
-                  onClick={() => navigate(-1)}>
+                  className="shad-button_dark_4 rounded-lg"
+                  onClick={() => navigate(-1)}
+                >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="shad-button_primary whitespace-nowrap"
+                  className={`shad-button_primary whitespace-nowrap ${isSubmitting ? "bg-postBackground text-gray-700" : ""}`}
+                  disabled={isSubmitting}
                 >
-
-                  Update
+                  {isSubmitting ? <Loader /> : "Update"}
                 </button>
               </div>
             </Form>

@@ -1,5 +1,5 @@
 
-
+export const convertFileToUrl = (file) => URL.createObjectURL(file);
 
 export function timeAgo(timestamp) {
     const now = new Date();

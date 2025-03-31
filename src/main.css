@@ -268,7 +268,7 @@
 
   /* Button */
   .shad-button_primary {
-    @apply bg-yellow-300 hover:bg-postBackground text-black flex-center gap-2 rounded-xl w-24 h-10 !important;
+    @apply bg-yellow-300 hover:bg-postBackground text-black flex-center gap-2 rounded-xl w-24 h-10 ;
   }
 
   .shad-button_dark_4 {
