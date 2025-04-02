@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetPostById } from '../../react-query/queriesAndMutations'
+import { useDeleteSevedPost, useGetPostById } from '../../react-query/queriesAndMutations'
 import { useParams } from 'react-router-dom'
 import Loader from '../../components/shared/Loader'
 import { Link } from 'react-router-dom'
@@ -10,24 +10,39 @@ import { useDeletePost } from '../../react-query/queriesAndMutations'
 import { useNavigate } from 'react-router-dom'
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
-
+import { useGetCurrentUser } from '../../react-query/queriesAndMutations'
 
 const PostDetails = () => {
 
+  const { data: currentUser } = useGetCurrentUser()
   const navigate = useNavigate();
 
   const {id} = useParams()
 
   const { data: post, isPending} = useGetPostById(id || '');
+  const savedPostRecord = currentUser?.save.find((record) => record.post.$id === post?.$id);
 
   const {user} = useUserContext();
   const { mutate: deletePost } = useDeletePost();
 
-  const handleDeletePost = () => {
-    deletePost({ postId: id, imageId: post?.imageId });
-    navigate(-1);
-  };
+  const {mutate: deleteSavePost} = useDeleteSevedPost();
 
+  const handleDeletePost = async () => {
+    try {
+      // Eğer post kaydedilmişse, kaydedilenlerden sil
+      if (post?.save !==0 && savedPostRecord) {
+         deleteSavePost(savedPostRecord.$id); // Kaydedilen postu sil
+      }
+  
+      // Post'u sil
+       deletePost({ postId: id, imageId: post?.imageId });
+  
+      // Kullanıcıyı önceki sayfaya yönlendir
+      navigate(-1);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
 
   return (
     <div className='post_details-container'>
