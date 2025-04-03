@@ -43,8 +43,8 @@ const validationSchema = Yup.object({
 
 
 const PostForm = ({ post, action }) => {
-    const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
-    const { mutateAsync: updatePost, isPending: isLoadingUpdate } = useUpdatePost();
+    const { mutateAsync: createPost} = useCreatePost();
+    const { mutateAsync: updatePost } = useUpdatePost();
 
     const { user } = useUserContext();
     const [fileUrl, setFileUrl] = useState(post?.media || '');
@@ -90,7 +90,7 @@ const PostForm = ({ post, action }) => {
                 navigate('/');
             }}
         >
-            {({ setFieldValue, values, errors, touched }) => (
+            {({ isSubmitting, setFieldValue, values, errors, touched }) => (
                 <Form className='flex flex-col gap-9 w-full md:w-5/6 max-w-5xl'>
                     <label className="shad-form_label">Caption</label>
                     <Field as="textarea" name="caption" className="shad-textarea custom-scrollbar p-2" />
@@ -141,14 +141,19 @@ const PostForm = ({ post, action }) => {
                     {errors.engineering && touched.engineering && <div className="text-red-500 text-sm">{errors.engineering}</div>}
 
                     <div className='flex gap-4 items-center justify-end'>
-                        <button type="button" className='h-10 w-24 rounded-xl bg-dark-4 hover:bg-gray-500'>
+                        <button
+                            type="button"
+                            className='h-10 w-24 rounded-xl bg-dark-4 hover:bg-gray-500'
+                            onClick={() => navigate(-1)} // Cancel butonu için geri yönlendirme
+                        >
                             Cancel
                         </button>
-                        <button type="submit"
-                            className="shad-button_primary whitespace-nowrap"
-                            disabled={isLoadingCreate || isLoadingUpdate}>
-                            {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-                            {action} Post
+                        <button
+                            type="submit"
+                            className={`shad-button_primary whitespace-nowrap ${isSubmitting ? "bg-postBackground text-gray-700" : ""}`}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? <Loader /> : action === "Update" ? "Update" : "Create"}
                         </button>
                     </div>
                 </Form>
