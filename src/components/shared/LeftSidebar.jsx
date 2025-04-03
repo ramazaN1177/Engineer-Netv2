@@ -4,6 +4,7 @@ import { useLogOut } from '../../react-query/queriesAndMutations';
 import { useUserContext } from '../../context/AuthContext';
 import { sidebarLinks } from '../../constants';
 import { CiLogout } from "react-icons/ci";
+import { FiMessageSquare } from "react-icons/fi";
 
 const LeftSidebar = () => {
     const { mutate: logOut, isSuccess } = useLogOut();
@@ -16,8 +17,10 @@ const LeftSidebar = () => {
             navigate(0);
         }
     }, [isSuccess]);
+    const isActive = pathname === "/chat";
 
     return (
+        
         <nav className='leftsidebar'>
             <div className='flex flex-col gap-11'>
                 <Link to='/' className='flex gap-3 items-center flex-col'>
@@ -41,11 +44,20 @@ const LeftSidebar = () => {
                         <p className='small-regular text-light-3'>@{user.username}</p>
                     </div>
                 </Link>
-
+                <div className='pt-4'>
+                    <Link to={`/chat/${user.id}`} className={`leftsidebar-link group ${isActive && 'bg-gray-700' } flex  gap-4 p-4`}>
+                        <FiMessageSquare className='text-2xl text-yellow-400' />
+                        <p>Messages</p>
+                    </Link>
+                </div>
+                <hr />
+                
                 <ul className='flex flex-col gap-6'>
+          
                     {sidebarLinks.map((link) => {
                         const isActive = pathname === link.route;
                         return (
+                            
                             <li
                                 className={`leftsidebar-link group ${isActive && 'bg-gray-700'
                                     }`}
@@ -67,6 +79,7 @@ const LeftSidebar = () => {
                     })}
                 </ul>
             </div>
+            <hr />
             <button
                 variant='ghost'
                 className='shad-button_ghost group'

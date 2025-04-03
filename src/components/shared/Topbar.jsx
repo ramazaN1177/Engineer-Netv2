@@ -3,7 +3,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { useLogOut } from '../../react-query/queriesAndMutations'
 import { useUserContext } from '../../context/AuthContext';
 import { CiLogout } from "react-icons/ci";
-
+import { FiMessageSquare } from "react-icons/fi";
 const Topbar = () => {
 
 
@@ -31,13 +31,22 @@ const Topbar = () => {
                  <h2>Engineer Net</h2>
             </Link>
 
-            <div className='flex gap-4'>
+            <div className='flex gap-10'>
+                
+                <Link to ={`/chat/${user.id}`} className='flex justify-center pt-2'>
+                    
+                        <FiMessageSquare className='text-2xl text-yellow-400'/>
+                    
+                </Link>
+                
                 <button variant = 'ghost' className='shad-button_ghost' onClick={()=>logOut()}>
                     <CiLogout className='text-2xl text-yellow-400' />
                 </button>
                 <Link to = {`/profile/${user.id}`} className='flex justify-center gap-3' >
                     <img src={user.imageUrl || "/Assets/icons/profile-placeholder.svg"} alt="profile" className='h-10 w-10 rounded-full' />
                 </Link>
+
+
             </div>
         </div>
     </section>

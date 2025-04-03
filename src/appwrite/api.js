@@ -163,18 +163,21 @@ export async function uploadFile(file) {
 
 export async function getFilePreviewUrl(fileId) {
     try {
-        const fileUrl = storage.getFilePreview(
-            appwriteConfig.storageId,
-            fileId,
-            2000,
-            2000,
-            "top",
-            100,
-        );
+        if (!fileId) {
+            throw new Error("File ID is missing");
+        }
+
+        // getFileView kullanarak dönüşümsüz URL alınıyor
+        const fileUrl = storage.getFileView(appwriteConfig.storageId, fileId);
+
+        if (!fileUrl) {
+            throw new Error("Failed to generate file view URL");
+        }
 
         return fileUrl;
     } catch (error) {
-        console.log(error);
+        console.error("Error in getFilePreviewUrl:", error);
+        throw error;
     }
 }
 

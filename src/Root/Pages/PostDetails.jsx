@@ -52,6 +52,7 @@ const PostDetails = () => {
             src={post?.imageUrl} 
             alt="post"
             className='post_details-img' />
+            {console.log(post.imageUrl)}
 
              <div className='post_details-info'>
 

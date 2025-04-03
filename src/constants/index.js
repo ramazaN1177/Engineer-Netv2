@@ -54,4 +54,5 @@ export const bottombarLinks = [
     route: "/create-post",
     label: "Create",
   },
+  
 ];

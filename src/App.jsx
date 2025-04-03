@@ -3,7 +3,7 @@ import {Routes, Route} from 'react-router-dom';
 import './main.css';
 import RegisterForm from './Auth/Forms/RegisterForm';
 import LoginForm from './Auth/Forms/LoginForm';
-import {Home,AllUsers,EditPost,Explore,Saved,CreatePost,Profile,PostDetails,UpdateProfile,} from './Root/Pages';
+import {Home,AllUsers,EditPost,Explore,Saved,CreatePost,Profile,PostDetails,UpdateProfile, ChatPage,} from './Root/Pages';
 import AuthLayout from './Auth/AuthLayout';
 import RootLayout from './Root/RootLayout';
 import {ToastContainer } from 'react-toastify';
@@ -33,6 +33,8 @@ const App = () => {
                 <Route path = "/posts/:id" element = {<PostDetails/>}></Route>
                 <Route path = "/profile/:id/*" element = {<Profile/>}></Route>
                 <Route path = "/update-profile/:id" element = {<UpdateProfile/>}></Route>
+                <Route path = "/chat/:id" element = {<ChatPage/>}></Route>
+
 
             </Route>
 
