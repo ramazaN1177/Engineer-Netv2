@@ -33,11 +33,7 @@ const Topbar = () => {
 
             <div className='flex gap-10'>
                 
-                <Link to ={`/chat/${user.id}`} className='flex justify-center pt-2'>
-                    
-                        <FiMessageSquare className='text-2xl text-yellow-400'/>
-                    
-                </Link>
+                
                 
                 <button variant = 'ghost' className='shad-button_ghost' onClick={()=>logOut()}>
                     <CiLogout className='text-2xl text-yellow-400' />

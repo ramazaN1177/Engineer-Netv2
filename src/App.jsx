@@ -33,7 +33,6 @@ const App = () => {
                 <Route path = "/posts/:id" element = {<PostDetails/>}></Route>
                 <Route path = "/profile/:id/*" element = {<Profile/>}></Route>
                 <Route path = "/update-profile/:id" element = {<UpdateProfile/>}></Route>
-                <Route path = "/chat/:id" element = {<ChatPage/>}></Route>
 
 
             </Route>

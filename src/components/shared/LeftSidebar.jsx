@@ -44,12 +44,7 @@ const LeftSidebar = () => {
                         <p className='small-regular text-light-3'>@{user.username}</p>
                     </div>
                 </Link>
-                <div className='pt-4'>
-                    <Link to={`/chat/${user.id}`} className={`leftsidebar-link group ${isActive && 'bg-gray-700' } flex  gap-4 p-4`}>
-                        <FiMessageSquare className='text-2xl text-yellow-400' />
-                        <p>Messages</p>
-                    </Link>
-                </div>
+                
                 <hr />
                 
                 <ul className='flex flex-col gap-6'>
