@@ -4,7 +4,6 @@ import { useLogOut } from '../../react-query/queriesAndMutations';
 import { useUserContext } from '../../context/AuthContext';
 import { sidebarLinks } from '../../constants';
 import { CiLogout } from "react-icons/ci";
-import { FiMessageSquare } from "react-icons/fi";
 
 const LeftSidebar = () => {
     const { mutate: logOut, isSuccess } = useLogOut();
@@ -17,7 +16,6 @@ const LeftSidebar = () => {
             navigate(0);
         }
     }, [isSuccess]);
-    const isActive = pathname === "/chat";
 
     return (
         
