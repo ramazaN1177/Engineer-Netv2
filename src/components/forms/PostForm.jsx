@@ -38,7 +38,7 @@ const validationSchema = Yup.object({
 });
 
 const PostForm = ({ post, action }) => {
-    const { mutateAsync: createPost} = useCreatePost();
+    const { mutateAsync: createPost } = useCreatePost();
     const { mutateAsync: updatePost } = useUpdatePost();
 
     const { user } = useUserContext();
@@ -49,48 +49,51 @@ const PostForm = ({ post, action }) => {
     const [suggestedCategory, setSuggestedCategory] = useState(null);
     const navigate = useNavigate();
 
-    const checkCategory = async (file, category) => {
-        if (!file || !category) return true; // If no file or category, proceed
-        
+    const checkCategory = async (fileOrUrl, category, isOldImage = false) => {
+        if (!fileOrUrl || !category) return true;
+
         try {
             setIsCheckingCategory(true);
             setCategoryCheckStatus(null);
             setSuggestedCategory(null);
-            
+
             const formData = new FormData();
-            formData.append('category', category);
-            formData.append('image', file);
-            
-            const response = await fetch('http://localhost:8000/check-category', {
-                method: 'POST',
-                body: formData
-            });
-            
-            if (!response.ok) {
-                throw new Error('Category check failed');
-            }
-            
-            const data = await response.json();
-            const result = data.result;
-            
-            if (result.startsWith('Yes')) {
-                setCategoryCheckStatus('success');
-                toast.success('Image matches the selected engineering field!');
-                return true; // Proceed with post creation
+            formData.append("category", category);
+
+            if (isOldImage) {
+                formData.append("image_url", fileOrUrl); // eski görselin URL’si
             } else {
-                setCategoryCheckStatus('error');
-                toast.error('Image does not match the selected engineering field');
-                return false; // Don't proceed with post creation
+                formData.append("image", fileOrUrl); // yeni yüklenen dosya
+            }
+
+            const response = await fetch("http://localhost:8000/check-category", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) throw new Error("Category check failed");
+            const data = await response.json();
+
+            const result = data.result;
+            if (result.startsWith("Yes")) {
+                setCategoryCheckStatus("success");
+                toast.success("Image matches the selected engineering field!");
+                return true;
+            } else {
+                setCategoryCheckStatus("error");
+                toast.error("Image does not match the selected engineering field");
+                return false;
             }
         } catch (error) {
-            console.error('Error checking category:', error);
-            setCategoryCheckStatus('error');
-            toast.error('Failed to verify image category');
-            return false; // Don't proceed with post creation
+            console.error("Error checking category:", error);
+            setCategoryCheckStatus("error");
+            toast.error("Failed to verify image category");
+            return false;
         } finally {
             setIsCheckingCategory(false);
         }
     };
+
 
     return (
         <div className="w-full max-w-4xl mx-auto px-4 py-6">
@@ -98,7 +101,7 @@ const PostForm = ({ post, action }) => {
                 <h2 className="text-2xl font-bold mb-6 text-light-1">
                     {action === "Update" ? "Update Post" : "Create New Post"}
                 </h2>
-                
+
                 <Formik
                     initialValues={{
                         caption: post ? post?.caption : "",
@@ -109,39 +112,48 @@ const PostForm = ({ post, action }) => {
                     validationSchema={validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         setSubmitting(true);
-                        
+
                         try {
-                            // First check if the image category matches
-                            if (file && values.engineering) {
+                            const isUpdate = post && action === 'Update';
+                            const selectedCategory = values.engineering?.label;
+
+                            const isOldImage = !file && isUpdate && post?.imageUrl;
+                            const hasCategory = Boolean(selectedCategory);
+
+                            if (hasCategory && (file || isOldImage)) {
                                 setIsCheckingCategory(true);
-                                const isCategoryValid = await checkCategory(file, values.engineering.label);
+
+                                const fileToCheck = file || post.imageUrl;
+                                const isCategoryValid = await checkCategory(fileToCheck, selectedCategory, isOldImage);
+
                                 setIsCheckingCategory(false);
-                                
+
                                 if (!isCategoryValid) {
                                     toast.error("Please ensure your image matches the selected category");
                                     setSubmitting(false);
                                     return;
                                 }
                             }
-                            
-                            // Proceed with post creation/update
+
                             const postData = {
                                 ...values,
-                                engineering: values.engineering ? values.engineering.label : "",
+                                engineering: selectedCategory || "",
                             };
 
-                            if (post && action === 'Update') {
+                            if (isUpdate) {
                                 const updatedPost = await updatePost({
                                     ...postData,
                                     postId: post.$id,
                                     imageId: post?.imageId,
                                     imageUrl: post?.imageUrl,
                                 });
+
                                 if (!updatedPost) {
                                     toast.error("Update failed. Please try again");
                                     setSubmitting(false);
                                     return;
                                 }
+
                                 toast.success("Post updated successfully!");
                                 return navigate(`/posts/${post.$id}`);
                             }
@@ -152,10 +164,11 @@ const PostForm = ({ post, action }) => {
                             });
 
                             if (!newPost) {
-                                toast.error('Post creation failed. Please try again');
+                                toast.error("Post creation failed. Please try again");
                                 setSubmitting(false);
                                 return;
                             }
+
                             toast.success("Post created successfully!");
                             navigate('/');
                         } catch (error) {
@@ -163,18 +176,19 @@ const PostForm = ({ post, action }) => {
                             setSubmitting(false);
                         }
                     }}
+
                 >
                     {({ isSubmitting, setFieldValue, values, errors, touched }) => (
                         <Form className='flex flex-col gap-6'>
                             <div className="space-y-2">
                                 <label className="text-light-2 font-medium block">Caption</label>
-                                <Field 
-                                    as="textarea" 
-                                    name="caption" 
-                                    className="w-full bg-customGreen-2 text-light-1 rounded-lg p-3 min-h-[120px] resize-y focus:ring-2 focus:ring-customGreen transition-all duration-300 custom-scrollbar" 
+                                <Field
+                                    as="textarea"
+                                    name="caption"
+                                    className="w-full bg-customGreen-2 text-light-1 rounded-lg p-3 min-h-[120px] resize-y focus:ring-2 focus:ring-customGreen transition-all duration-300 custom-scrollbar"
                                     placeholder="What's on your mind?"
                                 />
-                                {errors.caption && touched.caption && 
+                                {errors.caption && touched.caption &&
                                     <div className="text-rose-500 font-medium text-sm mt-1">{errors.caption}</div>
                                 }
                             </div>
@@ -197,10 +211,9 @@ const PostForm = ({ post, action }) => {
                                     />
                                 </div>
                                 {categoryCheckStatus && (
-                                    <div className={`mt-2 text-sm rounded-md p-2 ${
-                                        categoryCheckStatus === 'success' ? 'bg-green-100 text-green-700' : 
+                                    <div className={`mt-2 text-sm rounded-md p-2 ${categoryCheckStatus === 'success' ? 'bg-green-100 text-green-700' :
                                         'bg-rose-100 text-rose-700'
-                                    }`}>
+                                        }`}>
                                         {categoryCheckStatus === 'success' ? (
                                             <p>✅ Image matches the selected engineering field</p>
                                         ) : (
@@ -213,13 +226,13 @@ const PostForm = ({ post, action }) => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-light-2 font-medium block">Location</label>
-                                    <Field 
-                                        type="text" 
-                                        name="location" 
-                                        className="w-full bg-customGreen-2 text-light-1 rounded-lg p-3 focus:ring-2 focus:ring-customGreen focus:border-transparent transition-all duration-300" 
+                                    <Field
+                                        type="text"
+                                        name="location"
+                                        className="w-full bg-customGreen-2 text-light-1 rounded-lg p-3 focus:ring-2 focus:ring-customGreen focus:border-transparent transition-all duration-300"
                                         placeholder="Where are you posting from?"
                                     />
-                                    {errors.location && touched.location && 
+                                    {errors.location && touched.location &&
                                         <div className="text-rose-600 font-medium text-sm mt-1">{errors.location}</div>
                                     }
                                 </div>
@@ -263,8 +276,8 @@ const PostForm = ({ post, action }) => {
                                             }),
                                             option: (provided, state) => ({
                                                 ...provided,
-                                                backgroundColor: state.isSelected ? '#41504b' : 
-                                                                state.isFocused ? '#505956' : '#37403d',
+                                                backgroundColor: state.isSelected ? '#41504b' :
+                                                    state.isFocused ? '#505956' : '#37403d',
                                                 color: '#F7FAFC',
                                                 cursor: 'pointer',
                                                 padding: '10px 16px',
@@ -283,7 +296,7 @@ const PostForm = ({ post, action }) => {
                                             }),
                                         }}
                                     />
-                                    {errors.engineering && touched.engineering && 
+                                    {errors.engineering && touched.engineering &&
                                         <div className="text-rose-600 font-medium text-sm mt-1">{errors.engineering}</div>
                                     }
                                 </div>
