@@ -4,6 +4,7 @@ import {timeAgo} from '../../appwrite/utils'
 import { useUserContext } from '../../context/AuthContext'
 import PostStats from './PostStats'
 import { FiEdit } from "react-icons/fi";
+import placeHolder from '../../../Public/Assets/icons/profile-placeholder.svg'
 
 
 const PostCard = ({post}) => {
@@ -19,7 +20,7 @@ const PostCard = ({post}) => {
             <div className='flex items-center gap-3'>
                 <Link to={`/profile/${post.creator.$id}`}>
                     <img 
-                        src={post?.creator?.imageUrl || '/Assets/icons/profile-placeholder.svg'}
+                        src={post?.creator?.imageUrl || placeHolder}
                         alt="creator"
                         className='rounded-full w-12 lg:h-12' />
                 </Link>
@@ -54,7 +55,7 @@ const PostCard = ({post}) => {
                 </div>
 
             </div>
-            <img src={post.imageUrl || '/Assets/icons/profile-placeholder.svg'}
+            <img src={post.imageUrl || placeHolder}
                  alt="post image"
                  className='post-card_img' />
         </Link>

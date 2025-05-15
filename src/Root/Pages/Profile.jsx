@@ -15,6 +15,8 @@ import Loader from '../../components/shared/Loader'
 import { IoImageOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
+import placeHolder from '../../../Public/Assets/icons/profile-placeholder.svg'
+
 
 
 const StatBlock = ({ value, label }) => (
@@ -47,7 +49,7 @@ const Profile = () => {
         <div className="flex xl:flex-row flex-col max-xl:items-center flex-1 gap-7">
           <img
             src={
-              currentUser.imageUrl || "/Assets/icons/profile-placeholder.svg"
+              currentUser.imageUrl || placeHolder
             }
             alt="profile"
             className="w-28 h-28 lg:h-36 lg:w-36 rounded-full"

@@ -4,6 +4,7 @@ import { useLogOut } from '../../react-query/queriesAndMutations';
 import { useUserContext } from '../../context/AuthContext';
 import { sidebarLinks } from '../../constants';
 import { CiLogout } from "react-icons/ci";
+import logo from '../../../Public/Assets/images/logo.svg';
 
 const LeftSidebar = () => {
     const { mutate: logOut, isSuccess } = useLogOut();
@@ -23,7 +24,7 @@ const LeftSidebar = () => {
             <div className='flex flex-col gap-11'>
                 <Link to='/' className='flex gap-3 items-center flex-col'>
                     <img
-                        src='/Assets/images/logo.svg'
+                        src={logo}
                         alt='logo'
                         width={170}
                         height={100}

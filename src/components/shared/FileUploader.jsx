@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import fileUpload from '../../../Public/Assets/icons/file-upload.svg';
 
 const FileUploader = ({ fieldChange, mediaUrl }) => {
     const [fileUrl, setFileUrl] = useState(mediaUrl);
@@ -33,7 +34,7 @@ const FileUploader = ({ fieldChange, mediaUrl }) => {
                 ) : (
                     <div className='file_uploader-box'>
                         <img
-                            src="/Assets/icons/file-upload.svg"
+                            src={fileUpload}
                             width={96}
                             height={77}
                             alt="file-upload"

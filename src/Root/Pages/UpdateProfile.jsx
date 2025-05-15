@@ -6,6 +6,7 @@ import { useUserContext } from '../../context/AuthContext';
 import { useUpdateProfile, useGetUserById } from '../../react-query/queriesAndMutations';
 import { toast } from 'react-toastify';
 import ProfileUploader from '../../components/shared/ProfileUploader';
+import edit from '../../../Public/Assets/icons/edit.svg';
 const UpdateProfile = () => {
 
   const { user, setUser } = useUserContext();
@@ -24,7 +25,7 @@ const UpdateProfile = () => {
       <div className='common-container'>
         <div className="flex-start gap-3 justify-start w-full max-w-5xl">
           <img
-            src="/Assets/icons/edit.svg"
+            src={edit}
             width={36}
             height={36}
             alt="edit"

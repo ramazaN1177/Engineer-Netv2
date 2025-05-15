@@ -2,6 +2,7 @@ import React from 'react'
 import { useGetCurrentUser } from '../../react-query/queriesAndMutations'
 import Loader from '../../components/shared/Loader';
 import GridPostList from '../../components/shared/GridPostList';
+import save from '../../../Public/Assets/icons/save.svg'
 
 const Saved = () => {
 
@@ -17,7 +18,7 @@ const Saved = () => {
   return (
     <div className='saved-container'>
       <div className='flex gap-2 w-wull max-w-5xl'>
-        <img src='/Assets/icons/save.svg' alt='saved' width={36} height={36} className='invert-white' />
+        <img src={save} alt='saved' width={36} height={36} className='invert-white' />
         <h2 className='h3-bold md:h2-bold text-left w-full'>Saved Posts</h2>
       </div>
       {!currentUser ? (<Loader />) : (

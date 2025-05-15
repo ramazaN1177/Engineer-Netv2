@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import placeHolder from '../../../Public/Assets/icons/profile-placeholder.svg';
 
 const UserCard = ({ user }) => {
     return (
       <Link to={`/profile/${user.$id}`} className="user-card">
         <img
-          src={user.imageUrl || "/Assets/icons/profile-placeholder.svg"}
+          src={user.imageUrl || placeHolder}
           alt="creator"
           className="rounded-full w-14 h-14"
         />

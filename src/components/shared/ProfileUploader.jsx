@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import {useDropzone } from "react-dropzone";
 
 import { convertFileToUrl } from "../../appwrite/utils"
+import placeHolder from '../../../Public/Assets/icons/profile-placeholder.svg'
 
 
 const ProfileUploader = ({ onFileChange, mediaUrl }) => {
@@ -35,7 +36,7 @@ const ProfileUploader = ({ onFileChange, mediaUrl }) => {
 
       <div className="cursor-pointer flex-center gap-4">
         <img
-          src={fileUrl || "/Assets/icons/profile-placeholder.svg"}
+          src={fileUrl ||placeHolder}
           alt="image"
           className="h-24 w-24 rounded-full object-cover object-top"
         />

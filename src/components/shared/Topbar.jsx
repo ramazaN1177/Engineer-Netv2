@@ -4,6 +4,8 @@ import { useLogOut } from '../../react-query/queriesAndMutations'
 import { useUserContext } from '../../context/AuthContext';
 import { CiLogout } from "react-icons/ci";
 import { FiMessageSquare } from "react-icons/fi";
+import logo from '../../../Public/Assets/images/logo.svg';
+import placeHolder from '../../../Public/Assets/icons/profile-placeholder.svg';
 const Topbar = () => {
 
 
@@ -23,7 +25,7 @@ const Topbar = () => {
         <div className=' flex-between py-4 px-5'>
             <Link to ='/' className='flex gap-3 items-center'>
                 <img 
-                    src='/Assets/images/logo.svg'
+                    src={logo}
                     alt='logo'
                     width={34}
                     height={100}
@@ -39,7 +41,7 @@ const Topbar = () => {
                     <CiLogout className='text-2xl text-yellow-400' />
                 </button>
                 <Link to = {`/profile/${user.id}`} className='flex justify-center gap-3' >
-                    <img src={user.imageUrl || "/Assets/icons/profile-placeholder.svg"} alt="profile" className='h-10 w-10 rounded-full' />
+                    <img src={user.imageUrl || placeHolder} alt="profile" className='h-10 w-10 rounded-full' />
                 </Link>
 
 

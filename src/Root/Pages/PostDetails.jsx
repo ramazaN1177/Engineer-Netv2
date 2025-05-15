@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteOutline } from "react-icons/md";
 import { useGetCurrentUser } from '../../react-query/queriesAndMutations'
+import placeHolder from '../../../Public/Assets/icons/profile-placeholder.svg'
 
 const PostDetails = () => {
 
@@ -59,7 +60,7 @@ const PostDetails = () => {
               <div className='flex-between w-full'>
               <Link to={`/profile/${post?.creator.$id}`} className='flex items-center gap-3'>
                     <img 
-                        src={post?.creator?.imageUrl || '/Assets/icons/profile-placeholder.svg'}
+                        src={post?.creator?.imageUrl || placeHolder}
                         alt="creator"
                         className='rounded-full w-8 h-8 lg:w-12 lg:h-12' />
                
