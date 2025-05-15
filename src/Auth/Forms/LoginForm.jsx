@@ -4,6 +4,8 @@ import { Formik, Field, Form } from 'formik';
 import { toast } from 'react-toastify';
 import { useLoginAccount } from '../../react-query/queriesAndMutations';
 import { useUserContext } from '../../context/AuthContext';
+import logo from '../../../Public/Assets/images/logo.svg';
+
 
 
 const LoginForm = () => {
@@ -59,7 +61,7 @@ const LoginForm = () => {
                         <Form className="space-y-4 bg-customGreen p-4 rounded-lg w-96 shadow-lg shadow-gray-900" >
                             <div className="flex justify-center items-center">
                                 <div className="w-32 h-32 flex justify-center items-center rounded-full">
-                                    <img src="/Assets/images/logo.svg" alt="logo" className="w-full h-full object-contain rounded-full" />
+                                    <img src={logo} alt="logo" className="w-full h-full object-contain rounded-full" />
                                 </div>
                             </div>
                             <h2 className='flex justify-center h3-bold md:h2-bold pt-5 sm:pt-12 text-black'>Login</h2>
