@@ -66,7 +66,7 @@ const PostForm = ({ post, action }) => {
                 formData.append("image", fileOrUrl); // yeni yüklenen dosya
             }
 
-            const response = await fetch("http://localhost:8000/check-category", {
+            const response = await fetch("https://engineer.ozgurgokmen.online/check-category", {
                 method: "POST",
                 body: formData,
             });
